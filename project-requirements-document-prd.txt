@@ -1,0 +1,233 @@
+Project Requirements Document
+Project Title: Crypto Algorithmic Trading Platform
+Version: 1.0
+Date: [Insert Date]
+Prepared by: [Your Name/Team]
+
+Table of Contents
+Introduction
+1.1 Purpose
+1.2 Scope
+1.3 Definitions, Acronyms, and Abbreviations
+1.4 References
+Overall Description
+2.1 Product Perspective
+2.2 Product Functions
+2.3 User Classes and Characteristics
+2.4 Operating Environment
+2.5 Design and Implementation Constraints
+2.6 Assumptions and Dependencies
+Specific Requirements
+3.1 Trading Bot on HyperLiquid DEX
+3.1.1 Order Book Data Retrieval
+3.1.2 Precision Handling
+3.1.3 Limit Order Execution
+3.1.4 Position Management
+3.2 Binance Futures Large Liquidation Monitor
+3.2.1 WebSocket Connection
+3.2.2 Data Processing and Filtering
+3.2.3 Real-time Monitoring and Alerts
+3.2.4 Data Logging
+3.3 Cryptocurrency Recent Trade Monitor
+3.3.1 Trade Data Streaming
+3.3.2 Visual Display with Color Coding
+3.3.3 Multi-Symbol Support
+3.3.4 Data Recording
+3.4 Data Retrieval and Analysis
+3.4.1 Historical Data Fetching
+3.4.2 OHLCV Data Processing
+3.4.3 Support and Resistance Calculation
+Non-Functional Requirements
+4.1 Performance Requirements
+4.2 Security Requirements
+4.3 Maintainability and Extensibility
+4.4 Usability
+Appendices
+5.1 External Interfaces
+5.2 Glossary
+1. Introduction
+1.1 Purpose
+The purpose of this document is to outline the functional and non-functional requirements for the development of a Crypto Algorithmic Trading Platform. This platform includes:
+
+A trading bot for the HyperLiquid Decentralized Exchange (DEX).
+Monitoring tools for Binance Futures market activities.
+Data retrieval and analysis components.
+1.2 Scope
+The project aims to develop an automated trading system capable of:
+
+Executing trading strategies on the HyperLiquid DEX.
+Monitoring significant market events, such as large liquidations and recent trades on Binance Futures.
+Retrieving and processing historical market data for analysis.
+1.3 Definitions, Acronyms, and Abbreviations
+API: Application Programming Interface
+CSV: Comma-Separated Values
+DEX: Decentralized Exchange
+ETH: Ethereum
+GTC: Good Till Cancelled
+HTTP: HyperText Transfer Protocol
+JSON: JavaScript Object Notation
+OHLCV: Open, High, Low, Close, Volume (market data format)
+UTC: Coordinated Universal Time
+WebSocket: A protocol providing full-duplex communication channels over a single TCP connection
+1.4 References
+HyperLiquid API Documentation
+Binance API Documentation
+Python Official Documentation
+Relevant Python Libraries: requests, websockets, asyncio, pandas, eth_account, logging, schedule, etc.
+2. Overall Description
+2.1 Product Perspective
+The trading platform is an independent system designed to interact with cryptocurrency exchanges via APIs. It automates trading activities, monitors markets in real-time, and analyzes data to assist in trading decisions.
+
+2.2 Product Functions
+Trading Bot Functions:
+
+Retrieve real-time order book data.
+Execute limit orders with precise decimal handling.
+Manage positions with reduce-only orders.
+Log trading activities.
+Market Monitoring Functions:
+
+Monitor large liquidation events on Binance Futures.
+Track recent trades across multiple cryptocurrency symbols.
+Provide real-time visual display of market events with color-coded output.
+Record significant market data to CSV files.
+Data Retrieval and Analysis Functions:
+
+Fetch historical OHLCV data for specified symbols and timeframes.
+Process and store data for analysis.
+Calculate support and resistance levels.
+2.3 User Classes and Characteristics
+Quantitative Traders: Users who develop and implement algorithmic trading strategies.
+Data Analysts: Users who analyze market data to derive insights.
+Developers: Users who may extend or integrate the platform into larger systems.
+2.4 Operating Environment
+Hardware: Standard computing hardware capable of running Python 3.x.
+Software: Python 3.x environment with necessary libraries installed.
+Network: Reliable internet connectivity for accessing exchange APIs.
+Operating Systems: Compatible with Windows, macOS, or Linux.
+2.5 Design and Implementation Constraints
+API Rate Limits: Must adhere to exchange-imposed rate limits.
+Security: Secure handling of API keys and private keys.
+Asynchronous Programming: Utilize asyncio for real-time data handling.
+Exception Handling: Robust error handling to prevent crashes.
+2.6 Assumptions and Dependencies
+Exchanges' APIs are operational and accessible.
+Users possess valid API keys with appropriate permissions.
+Users have a basic understanding of command-line interfaces and Python.
+3. Specific Requirements
+3.1 Trading Bot on HyperLiquid DEX
+3.1.1 Order Book Data Retrieval
+Requirement: Retrieve real-time Level 2 (L2) order book data for specified trading pairs.
+Details:
+Use HyperLiquid's API endpoint for L2 order book data.
+Fetch best ask and bid prices.
+Implement error handling for network issues and data parsing.
+3.1.2 Precision Handling
+Requirement: Determine and handle correct decimal precision for order sizes and prices.
+Details:
+Retrieve szDecimals and pxDecimals from exchange metadata.
+Apply appropriate rounding to order sizes and prices.
+Ensure compliance with exchange precision requirements.
+3.1.3 Limit Order Execution
+Requirement: Place limit orders with specified parameters, including size, price, and reduce-only flag.
+Details:
+Utilize the Exchange class to interface with HyperLiquid.
+Support both buy and sell orders.
+Use GTC (Good Till Cancelled) order type.
+Provide detailed logging for order placement and results.
+3.1.4 Position Management
+Requirement: Manage open positions using reduce-only orders.
+Details:
+Implement logic to place reduce-only orders that only decrease existing positions.
+Ensure new positions are not opened when reduce-only is set.
+Handle partial and full position reductions.
+3.2 Binance Futures Large Liquidation Monitor
+3.2.1 WebSocket Connection
+Requirement: Establish a WebSocket connection to Binance Futures' !forceOrder@arr stream.
+Details:
+Use the websockets library to connect.
+Handle reconnections and exceptions gracefully.
+3.2.2 Data Processing and Filtering
+Requirement: Process incoming liquidation data and filter events based on a minimum USD size threshold (e.g., > $100,000).
+Details:
+Parse JSON messages to extract essential information.
+Calculate liquidation size in USD.
+Implement configurable thresholds.
+3.2.3 Real-time Monitoring and Alerts
+Requirement: Display real-time alerts for significant liquidation events with appropriate formatting.
+Details:
+Use color coding and text attributes to emphasize large liquidations.
+Display timestamps and symbol information.
+Update and display liquidation statistics periodically.
+3.2.4 Data Logging
+Requirement: Log significant liquidation events to a CSV file.
+Details:
+Append data with proper formatting.
+Ensure thread-safe file operations.
+Handle file I/O exceptions.
+3.3 Cryptocurrency Recent Trade Monitor
+3.3.1 Trade Data Streaming
+Requirement: Connect to Binance's WebSocket streams to receive real-time trade data.
+Details:
+Support multiple symbols simultaneously.
+Handle asynchronous data streams.
+3.3.2 Visual Display with Color Coding
+Requirement: Display recent trades with color-coded output based on trade type and size.
+Details:
+Differentiate between buy and sell trades.
+Highlight large trades with special colors and attributes.
+Include trade details in the display.
+3.3.3 Multi-Symbol Support
+Requirement: Monitor multiple cryptocurrency symbols concurrently.
+Details:
+Create asynchronous tasks for each symbol.
+Ensure efficient resource utilization.
+3.3.4 Data Recording
+Requirement: Log significant trades to a CSV file.
+Details:
+Record comprehensive trade information.
+Manage CSV files for continuous data recording.
+3.4 Data Retrieval and Analysis
+3.4.1 Historical Data Fetching
+Requirement: Fetch historical OHLCV data for specified symbols and timeframes.
+Details:
+Use appropriate API endpoints.
+Handle pagination and rate limits.
+3.4.2 OHLCV Data Processing
+Requirement: Process OHLCV data and store it in a structured format.
+Details:
+Convert raw data into a pandas DataFrame.
+Handle data type conversions and missing values.
+3.4.3 Support and Resistance Calculation
+Requirement: Calculate support and resistance levels from historical data.
+Details:
+Implement logic to identify key price levels.
+Exclude recent data points if necessary.
+Update calculations as new data is fetched.
+4. Non-Functional Requirements
+4.1 Performance Requirements
+Latency: The system shall process and display real-time data with minimal delay.
+Scalability: Support multiple concurrent WebSocket connections without significant performance degradation.
+Efficiency: Optimize network calls and data processing to reduce resource usage.
+4.2 Security Requirements
+Data Protection: Secure storage and handling of API keys and sensitive data.
+Error Handling: Prevent crashes and data leaks through robust exception handling.
+Compliance: Adhere to exchange policies and legal regulations.
+4.3 Maintainability and Extensibility
+Modularity: Code shall be organized into modular functions and classes.
+Documentation: Provide clear documentation and comments within the code.
+Version Control: Use a version control system (e.g., Git) for code management.
+4.4 Usability
+User Interface: Provide clear and readable console outputs.
+Configuration: Allow easy adjustment of parameters via configuration files or command-line arguments.
+Error Messages: Display informative error messages to aid in troubleshooting.
+5. Appendices
+5.1 External Interfaces
+HyperLiquid API: For trading and market data on the HyperLiquid DEX.
+Binance WebSocket API: For real-time market data on Binance Futures.
+File System: For reading configurations and writing logs/data to files.
+5.2 Glossary
+Asynchronous Programming: A form of parallel programming that allows a unit of work to run separately from the main application thread.
+OHLCV Data: A set of data that summarizes the open, high, low, close, and volume values over a specific period.
+Reduce-Only Order: An order that can only decrease a trader's existing position.
+Note: This document is intended to provide a comprehensive overview of the project requirements based on the provided code and description. It is recommended to review and adjust the requirements as needed to align with specific project goals and constraints.
