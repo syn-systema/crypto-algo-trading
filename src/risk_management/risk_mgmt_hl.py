@@ -31,11 +31,11 @@ import requests
 
 # Trading parameters
 symbol = 'WIF'          # Trading pair
-max_loss = -5          # Maximum allowed loss percentage
-target = 4             # Target profit percentage
+max_loss = -2          # Maximum allowed loss percentage
+target = 1.5           # Target profit percentage
 acct_min = 9          # Minimum account balance threshold
 timeframe = '4h'      # Trading timeframe
-size = 10             # Position size
+size = 1              # Position size (reduced for testing)
 coin = symbol         # Coin symbol (same as trading pair)
 
 # Initialize account connection

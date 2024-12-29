@@ -16,3 +16,4 @@ asyncio>=3.4.3
 colorama>=0.4.4
 schedule>=1.1.0
 websockets>=10.0
+hyperliquid-python-sdk @ git+https://github.com/hyperliquid-dex/hyperliquid-python-sdk.git
