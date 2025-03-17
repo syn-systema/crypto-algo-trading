@@ -1,8 +1,6 @@
 Project Requirements Document
 Project Title: Crypto Algorithmic Trading Platform
 Version: 1.0
-Date: [Insert Date]
-Prepared by: [Your Name/Team]
 
 Table of Contents
 Introduction
